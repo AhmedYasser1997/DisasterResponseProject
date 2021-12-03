@@ -79,7 +79,21 @@ def build_model():
     
     pipeline = Pipeline([('count', CountVectorizer(tokenizer=tokenize)),
                     ('tfid', TfidfTransformer()),
-                    ('clf', MultiOutputClassifier(RandomForestClassifier(n_estimators = 75, max_features = 'auto', random_state=0)))])
+                    ('clf', MultiOutputClassifier(RandomForestClassifier(n_estimators = 50, random_state=0)))])
+    
+    ## GRID SEARCH 
+    # The grid search part will take a couple of hours to fit, so I ran it once and saved it in the pipeline_improved variable
+    # to avoid wasting time on running it everytime. To return the pipeline resulted from completing the gridsearch, uncomment the following     # lines and replace pipeline with pipeline_improved
+    
+#     parameters = {'clf__estimator__max_features':['auto', 'sqrt', 'log2'],
+#              'clf__estimator__n_estimators':[50, 60, 75]}
+
+#     cv = GridSearchCV(estimator=pipeline, param_grid=parameters)
+#     pipeline_improved = Pipeline([('count', CountVectorizer(tokenizer=tokenize)),
+#                     ('tfid', TfidfTransformer()),
+#                     ('clf', MultiOutputClassifier(RandomForestClassifier(n_estimators = 75, max_features = 'auto', random_state=0)))])
+
+    # In the other ml notebook in the folder, I also explain the same thing 
     return pipeline
 
 

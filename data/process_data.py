@@ -65,9 +65,10 @@ def clean_data(df):
     # Original column has over 50% of it missing values. We won't need anyways as the message column has no missing values and the values   are all in English
     df.drop(columns=['original'], inplace=True)
     
-    # related column has max value of 2 and when this happens, all other categories are 0, so therefore not related. 
-    # So we can safely change the 2 values to 0.
-    df["related"].replace({2: 0}, inplace=True)
+    # related column has max value of 2 and when this happens, all other categories are 0, so therefore it may not be related.
+    # Also the rows with related value 2 are only 188 rows and the data is over 26000 rows. 
+    # So we can safely remove those rows.
+    df = df.query("related!=2")
     
     # And since data is not numeric, there is no outliers or distributions to check
     return df
